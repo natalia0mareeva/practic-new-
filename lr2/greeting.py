@@ -11,20 +11,25 @@ def greet_input(input_line):
     if is_valid_name(name):
       print(f'Рад тебя видеть, {name}!')
     else:
-      print(f'{name} - некорректное имя', file=sys.stderr) 
-        
+      print(f'{name} - некорректное имя', file=sys.stderr)
+
 def main():
-  while True:
-    if sys.stdin.isatty():
-      print('Привет! Представься:')
-    try:
-      user_input = sys.stdin.readline()
-      if not user_input:
+
+  if sys.stdin.isatty():
+    while True:
+      try:
+        print('Привет! Представься:')
+        user_input = sys.stdin.readline()
+        greet_input(user_input)
+      except KeyboardInterrupt:
+        print('\nПока!')
         break
-      greet_input(user_input)
-    except KeyboardInterrupt:
-      print('\nПока!')
-      break
+
+  else:
+    file_input = sys.stdin.readlines()
+    for line in file_input:
+      greet_input(line)
+
 
 if __name__ == "__main__":
-    main()
+  main()
